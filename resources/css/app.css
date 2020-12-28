@@ -1,0 +1,13 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.heroicon-24 {
+    width: 24px;
+    height: 24px;
+}
+
+.heroicon-20 {
+    width: 20px;
+    height: 20px;
+}
