@@ -3,8 +3,8 @@
         <button
             :class="[
                 'item h-32 w-full flex items-center justify-center',
-                colorClass,
                 ]"
+            :style="{'background-color': bgColorHex}"
             @click="handleClick"
         >
             {{ item.title }}
@@ -41,11 +41,8 @@ export default {
         },
     },
     computed: {
-        colorClass: function () {
-            if ('edit' === this.mode) {
-                return 'bg-gray-200'
-            }
-            return this.item.complete ? 'bg-green-300' : 'bg-red-300'
+        bgColorHex: function() {
+            return this.item.complete ? '#EDF2F7' : this.item.meta.color
         },
         widthClass: function () {
             console.log('widthClass', this.list.cols)

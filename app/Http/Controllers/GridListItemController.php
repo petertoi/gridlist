@@ -36,12 +36,12 @@ class GridListItemController extends Controller
             'gridListItemModal',
             [
                 'title' => 'required|max:256',
+                'meta' => 'array',
+                'meta.color' => 'string',
             ]
         );
 
-        $list->items()->create([
-            'title' => $validated['title']
-        ]);
+        $list->items()->create($validated);
 
         return Redirect::back();
     }
@@ -74,18 +74,14 @@ class GridListItemController extends Controller
             'gridListItemModal',
             [
                 'title' => 'required|max:256',
+                'meta' => 'array',
+                'meta.color' => 'string',
             ]
         );
 
-        $item->update([
-            'title' => $validated['title']
-        ]);
+        $item->update($validated);
 
         return Redirect::back();
-
-//        return Redirect::route('l.edit', [
-//            'list' => $list->load('items'),
-//        ]);
     }
 
     /**

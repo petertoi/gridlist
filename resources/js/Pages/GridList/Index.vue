@@ -22,21 +22,24 @@
                             class="p-4"
                             :class="{'bg-gray-100': index % 2}"
                         >
-                            <inertia-link :href="route('l.show', [list.uuid])" class="block">{{ list.title }}</inertia-link>
+                            <inertia-link :href="route('l.show', [list.uuid])" class="block">{{
+                                    list.title
+                                }}
+                            </inertia-link>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <jet-dialog-modal :show="isCreatingList" @close="isCreatingList = false">
+        <jet-dialog-modal :show="modal.show" @close="modal.show = false">
             <template #title>
                 New List
             </template>
 
             <template #content>
-                <form>
-                    <label for="new-grid-list-title" class="block`">Title</label>
+                <form @submit.prevent="submitNewListForm">
+                    <label for="new-grid-list-title" class="block`">List Title</label>
                     <input
                         type="text"
                         id="new-grid-list-title"
@@ -44,10 +47,13 @@
                         v-model="form.title"
                     />
                     <div class="flex justify-between mt-4">
-                        <jet-secondary-button @click.native="cancelNewList">
+                        <jet-secondary-button @click.native="cancelNewListForm">
                             Cancel
                         </jet-secondary-button>
-                        <jet-button @click.native="saveNewList">
+                        <jet-button
+                            @click.native="submitNewListForm"
+                            :disabled="form.processing"
+                        >
                             Create
                         </jet-button>
                     </div>
@@ -87,33 +93,28 @@ export default {
     },
     data: function () {
         return {
-            isCreatingList: false,
-            form: {
-                title: null,
-                processing: false,
-            },
+            form: this.$inertia.form({
+                title: '',
+            }),
+            modal: {
+                show: false,
+            }
         }
     },
     methods: {
-        createList (data) {
-            console.log('createList', data)
-            this.$inertia.post(`/l`, data)
-        },
         createNewList: function () {
-            this.isCreatingList = true
+            this.modal.show = true
         },
-        saveNewList: function () {
-            this.createList(this.form)
-            this.isCreatingList = false
+        cancelNewListForm: function () {
+            console.log('cancelNewListForm')
+            this.modal.show = false
             this.$nextTick(() => {
                 this.form.title = null
             })
         },
-        cancelNewList: function () {
-            this.isCreatingList = false
-            this.$nextTick(() => {
-                this.form.title = null
-            })
+        submitNewListForm() {
+            console.log('submitNewListForm', this.form)
+            this.form.post(route('l.store'))
         },
     },
 }

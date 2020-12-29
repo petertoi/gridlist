@@ -27,7 +27,12 @@ class GridListItem extends Model
         return 'uuid';
     }
 
-    public function list() {
+    protected $casts = [
+        'meta' => 'array',
+    ];
+
+    public function list()
+    {
         return $this->hasOne(GridList::class);
     }
 

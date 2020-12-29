@@ -7,6 +7,8 @@ import Vue from 'vue';
 import {InertiaApp} from '@inertiajs/inertia-vue';
 import {InertiaForm} from 'laravel-jetstream';
 import PortalVue from 'portal-vue';
+import 'vue-swatches/dist/vue-swatches.css'
+
 
 Vue.mixin({
     methods: {
@@ -22,6 +24,7 @@ Vue.mixin({
         }
     }
 });
+
 Vue.use(InertiaApp);
 Vue.use(InertiaForm);
 Vue.use(PortalVue);

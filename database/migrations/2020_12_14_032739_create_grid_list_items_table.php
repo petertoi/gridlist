@@ -18,6 +18,7 @@ class CreateGridListItemsTable extends Migration
             $table->uuid('uuid');
             $table->foreignIdFor(\App\Models\GridList::class)->constrained();
             $table->string('title');
+            $table->json('meta')->nullable();
             $table->boolean('complete')->default(false);
             $table->timestamps();
         });

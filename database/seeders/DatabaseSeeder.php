@@ -47,10 +47,13 @@ class DatabaseSeeder extends Seeder {
         $fooA = GridListItem::updateOrCreate( [ 'grid_list_id' => $foo->id, 'title' => 'A' ], [
             'grid_list_id' => $foo->id,
             'title'        => 'A',
+            'meta' => ['color' => '#F56565'],
+
         ] );
         $fooB = GridListItem::updateOrCreate( [ 'grid_list_id' => $foo->id, 'title' => 'B' ], [
             'grid_list_id' => $foo->id,
             'title'        => 'B',
+            'meta' => ['color' => '#ED8936'],
         ] );
 
         $foo->save();
@@ -64,14 +67,17 @@ class DatabaseSeeder extends Seeder {
         $barA = GridListItem::updateOrCreate( [ 'grid_list_id' => $bar->id, 'title' => 'A' ], [
             'grid_list_id' => $bar->id,
             'title'        => 'A',
+            'meta' => ['color' => '#F56565'],
         ] );
         $barB = GridListItem::updateOrCreate( [ 'grid_list_id' => $bar->id, 'title' => 'B' ], [
             'grid_list_id' => $bar->id,
             'title'        => 'B',
+            'meta' => ['color' => '#ECC94B'],
         ] );
         $barC = GridListItem::updateOrCreate( [ 'grid_list_id' => $bar->id, 'title' => 'C' ], [
             'grid_list_id' => $bar->id,
             'title'        => 'C',
+            'meta' => ['color' => '#4299E1'],
         ] );
 
         $bar->save();

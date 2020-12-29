@@ -22,14 +22,26 @@
                         <form @submit.prevent="handleSubmit">
                             <!-- title -->
                             <jet-label class="block">Title</jet-label>
-                            <jet-input :class="`w-full ${form.error('title') && 'border-red-400'}`"
+                            <jet-input :class="`mt-2 w-full ${form.error('title') && 'border-red-400'}`"
                                        type="text" v-model="form.title"/>
                             <jet-input-error :message="form.error('title')" class="mt-2"/>
+
+                            <!-- color -->
+                            <jet-label class="block mt-4">Colour</jet-label>
+                            <v-swatches
+                                class="mt-2"
+                                v-model="form.meta.color"
+                                :swatches="swatches"
+                                inline
+                                row-length="7"
+                                shapes="circles"
+                            ></v-swatches>
+
                             <div class="mt-4 flex justify-between">
                                 <jet-secondary-button type="button" @click.native="handleClose">
                                     Cancel
                                 </jet-secondary-button>
-                                <jet-button type="submit" :disabled="form.processing">
+                                <jet-button type="submit" :disabled="form.processing" @click.prevent="handleSubmit">
                                     Save
                                 </jet-button>
                             </div>
@@ -53,6 +65,7 @@ import JetInput from "@/Jetstream/Input";
 import JetInputError from "@/Jetstream/InputError"
 import JetButton from "@/Jetstream/Button";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
+import VSwatches from 'vue-swatches'
 
 export default {
     name: 'GridListItemModal',
@@ -63,6 +76,7 @@ export default {
         Modal,
         JetButton,
         JetSecondaryButton,
+        VSwatches,
     },
     props: {
         show: {
@@ -81,8 +95,11 @@ export default {
             type: Object,
             default: function () {
                 return {
-                    'uuid': false,
+                    'uuid': null,
                     'title': null,
+                    'meta' : {
+                        'color': null
+                    }
                 }
             },
         },
@@ -94,7 +111,10 @@ export default {
     data: function () {
         console.log('data', this.item)
         return {
-            form: this.$inertia.form({}),
+            form: this.$inertia.form({
+                ...this.item
+            }),
+            swatches: ['#F56565', '#ED8936', '#ECC94B', '#48BB78', '#4299E1', '#9F7AEA', '#ED64A6']
         }
     },
     watch: {
@@ -122,7 +142,6 @@ export default {
             }
         },
         handleSubmit() {
-            // this.$emit('modal-save', this.form)
             const method = !!this.item.uuid ? 'put' : 'post'
 
             const url = !!this.item.uuid
@@ -131,6 +150,7 @@ export default {
 
             this.form.submit(method, url, {
                 onSuccess: page => {
+                    console.log('onSuccess', page)
                     if (this.form.hasErrors('gridListItemModal')) {
                         //fail
                         this.$emit('modal-fail')
