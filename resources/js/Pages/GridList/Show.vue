@@ -5,16 +5,12 @@
                 {{ list.title }}
             </h2>
             <div>
-                <jet-secondary-button
-                    @click.native="toggleEdit"
+                <toggle-switch
+                    @click.native="toggleMode"
                 >
-                    Edit
-                </jet-secondary-button>
-                <jet-secondary-button
-                    @click.native="toggleClear"
-                >
-                    Clear
-                </jet-secondary-button>
+                    Edit Mode
+                </toggle-switch>
+
             </div>
         </template>
 
@@ -37,6 +33,7 @@ import AppLayout from '@/Layouts/AppLayout'
 import JetButton from '@/Jetstream/Button'
 import JetSecondaryButton from '@/Jetstream/SecondaryButton'
 import GridList from '@/Pages/GridList/GridList'
+import ToggleSwitch from "@/Pages/GridList/ToggleSwitch";
 
 export default {
     name: 'Show',
@@ -45,6 +42,7 @@ export default {
         GridList,
         JetButton,
         JetSecondaryButton,
+        ToggleSwitch,
     },
     computed: {
         list: function () {
@@ -52,9 +50,8 @@ export default {
         },
     },
     methods: {
-        toggleEdit: function () {
+        toggleMode: function () {
             this.$inertia.get(`/l/${this.list.uuid}/edit`)
-            // this.mode = 'edit' === this.mode ? 'show' : 'edit'
         },
         toggleClear: function () {
             console.log('toggleClear')

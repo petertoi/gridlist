@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get( '/', function () {
-    return view( 'welcome' );
+    return redirect( 'login' );
 } );
 
 Route::middleware( [ 'auth:sanctum', 'verified' ] )->group( function () {
-    Route::get( '/dashboard', function () {
-        return Inertia\Inertia::render( 'Dashboard' );
-    } )->name( 'dashboard' );
+//    Route::get( '/dashboard', function () {
+//        return Inertia\Inertia::render( 'Dashboard' );
+//    } )->name( 'dashboard' );
 
     Route::resource( 'l', \App\Http\Controllers\GridListController::class, [
         'parameters' => [

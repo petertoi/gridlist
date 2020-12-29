@@ -5,16 +5,12 @@
                 {{ list.title }}
             </h2>
             <div>
-                <jet-secondary-button
-                    @click.native="handleCancel"
+                <toggle-switch
+                    checked
+                    @click.native="toggleMode"
                 >
-                    Cancel
-                </jet-secondary-button>
-                <jet-button
-                    @click.native="handleSave"
-                >
-                    Save
-                </jet-button>
+                    Edit Mode
+                </toggle-switch>
             </div>
         </template>
 
@@ -57,22 +53,22 @@
 </template>
 
 <script>
-import { Inertia } from '@inertiajs/inertia'
 import AppLayout from '@/Layouts/AppLayout'
 import JetButton from '@/Jetstream/Button'
 import JetSecondaryButton from '@/Jetstream/SecondaryButton'
 import GridList from '@/Pages/GridList/GridList'
-import GridListItemModal from "@/Pages/GridList/GridListItemModal";
+import GridListItemModal from "@/Pages/GridList/GridListItemModal"
+import ToggleSwitch from "@/Pages/GridList/ToggleSwitch"
 
 export default {
     name: 'Edit',
     components: {
-        Inertia,
         AppLayout,
         JetButton,
         JetSecondaryButton,
         GridList,
         GridListItemModal,
+        ToggleSwitch
     },
     data: function () {
         return {
@@ -95,27 +91,8 @@ export default {
         },
     },
     methods: {
-        handleCancel: function () {
-            console.log('handleCancel')
+        toggleMode() {
             this.$inertia.get(`/l/${this.list.uuid}`)
-
-        },
-        handleSave: function () {
-            console.log('handleSave')
-            this.$inertia.put(`/l/${this.list.uuid}`,
-                {
-                    ...this.list,
-                    title: this.form.title,
-                    cols: this.form.cols,
-                },
-            )
-
-        },
-        handleEdit: function (item) {
-            console.log('handleEdit')
-        },
-        handleCreate: function () {
-            console.log('handleCreate')
         },
         handleItemCreate() {
             console.log('handleItemCreate')
@@ -132,13 +109,14 @@ export default {
         },
         handleModalClose() {
             console.log('handleModalClose')
-            this.modal = {
-                show: false,
-            }
+            this.modal.show = false
+            this.$nextTick(() => {
+                this.modal.item = null
+            })
         },
         handleModalSave() {
             console.log('handleModalSave')
-            // Inertia.reload({ only: ['list'] })
+            this.handleModalClose()
         },
     },
 }
