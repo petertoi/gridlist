@@ -92,48 +92,14 @@ class GridListController extends Controller {
         $validated = $request->validate( [
             'title'         => 'required|max:255',
             'cols'          => 'required|int',
-            'items'         => 'array',
-            'items.*.title' => 'required|max:255',
         ] );
 
         $list->title = $validated['title'];
         $list->cols = $validated['cols'];
         $list->save();
 
-        $previousUuids = $list->items()->pluck( 'uuid' )->toArray();
 
-        $new = array_filter(
-            $validated['items'],
-            function ( $item ) {
-                return ! array_key_exists( 'uuid', $item );
-            } );
-
-        $keep = array_filter(
-            $validated['items'],
-            function ( $item ) {
-                return array_key_exists( 'uuid', $item );
-            } );
-
-        if ( $keep ) {
-            foreach ( $keep as $item ) {
-                $list->items()->updateOrCreate(
-                    [ 'uuid' => $item['uuid'] ],
-                    $item
-                );
-            }
-        }
-
-        if ( $new ) {
-            foreach ( $new as $item ) {
-                $list->items()->create(
-                    $item
-                );
-            }
-        }
-
-        return Redirect::route( 'l.show', [
-            'list' => $list->load( 'items' ),
-        ] );
+        return Redirect::back();
 
     }
 

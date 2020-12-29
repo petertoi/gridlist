@@ -43,9 +43,7 @@ class GridListItemController extends Controller
             'title' => $validated['title']
         ]);
 
-        return Redirect::route('l.edit', [
-            'list' => $list->load('items'),
-        ]);
+        return Redirect::back();
     }
 
     /**

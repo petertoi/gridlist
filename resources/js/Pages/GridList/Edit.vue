@@ -15,17 +15,41 @@
         </template>
 
         <div class="pt-12">
-            <div class="mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <form
-                        action=""
-                        @submit.prevent
-                    >
-                        <input
-                            type="number"
-                            v-model="form.cols"
+            <div class="mx-auto sm:px-6 lg:px-8 flex justify-around">
+                <div class="flex-shrink bg-white overflow-hidden shadow-xl sm:rounded-lg text-center p-4">
+                    <label for="grid-list-cols" class="block">Columns</label>
+                    <div class="flex flex-row items-center mt-2">
+                        <button
+                            type="button"
+                            @click="handleListColsDecrement"
                         >
-                    </form>
+                            <!-- Heroicons: minus-circle -->
+                            <svg class="heroicon-24 text-gray-500 hover:text-gray-800"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </button>
+                        <input
+                            id="grid-list-cols"
+                            type="text"
+                            class="form-input text-center w-16 mx-4"
+                            v-model="list.cols"
+                        >
+                        <button
+                            type="button"
+                            @click="handleListColsIncrement"
+                        >
+                            <!-- Heroicons: plus-circle -->
+                            <svg class="heroicon-24 text-gray-500 hover:text-gray-800"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,26 +97,60 @@ export default {
     data: function () {
         return {
             list: this.$page.list,
-            form: {
-                title: this.$page.list.title,
-                cols: this.$page.list.cols,
-            },
             modal: {
                 show: false,
                 item: {
                     title: null
                 }
             },
+            form: this.$inertia.form({
+                title: this.$page.list.title,
+                cols: this.$page.list.cols,
+            }),
         }
     },
     watch: {
         $page: function (newPage) {
             this.list = {...newPage.list}
+            this.form = this.$inertia.form({
+                    title: newPage.list.title,
+                    cols: newPage.list.cols,
+                },
+                {
+                    bag: 'gridListEdit'
+                })
         },
     },
     methods: {
         toggleMode() {
             this.$inertia.get(`/l/${this.list.uuid}`)
+        },
+        handleListColsIncrement() {
+            console.log('handleListColsIncrement', this.list.cols)
+            if (6 > this.form.cols) {
+                this.form.cols++
+                this.saveList()
+            }
+        },
+        handleListColsDecrement() {
+            console.log('handleListColsDecrement', this.list.cols)
+            if (1 < this.form.cols) {
+                this.form.cols--
+                this.saveList()
+            }
+        },
+        saveList() {
+            this.form.put(
+                route('l.update', {list: this.list.uuid}),
+                {
+                    onSuccess: page => {
+                        console.log('onSuccess', page)
+                    },
+                    onFail: errors => {
+                        console.log('onFail', errors)
+                    },
+                }
+            )
         },
         handleItemCreate() {
             console.log('handleItemCreate')

@@ -14,14 +14,15 @@
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl lg:max-w-3xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <ul v-if="lists" class="">
                         <li
                             v-for="(list, index) in lists"
-                            class="p-3"
+                            class="p-4"
+                            :class="{'bg-gray-100': index % 2}"
                         >
-                            <inertia-link :href="route('l.show', [list.uuid])">{{ list.title }}</inertia-link>
+                            <inertia-link :href="route('l.show', [list.uuid])" class="block">{{ list.title }}</inertia-link>
                         </li>
                     </ul>
                 </div>
@@ -35,25 +36,26 @@
 
             <template #content>
                 <form>
-                    <label for="new-grid-list-title">Title</label>
+                    <label for="new-grid-list-title" class="block`">Title</label>
                     <input
                         type="text"
                         id="new-grid-list-title"
-                        class="border"
+                        class="form-input w-full"
                         v-model="form.title"
                     />
+                    <div class="flex justify-between mt-4">
+                        <jet-secondary-button @click.native="cancelNewList">
+                            Cancel
+                        </jet-secondary-button>
+                        <jet-button @click.native="saveNewList">
+                            Create
+                        </jet-button>
+                    </div>
+
                 </form>
             </template>
 
             <template #footer>
-                <div class="flex justify-between">
-                    <jet-secondary-button @click.native="cancelNewList">
-                        Cancel
-                    </jet-secondary-button>
-                    <jet-button @click.native="saveNewList">
-                        Create
-                    </jet-button>
-                </div>
             </template>
         </jet-dialog-modal>
 
