@@ -12,6 +12,16 @@ class GridListItem extends Model
 
     protected $guarded = ['id', 'uuid', 'created_at'];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'id',
+        'grid_list_id',
+    ];
+
     public function getRouteKeyName()
     {
         return 'uuid';

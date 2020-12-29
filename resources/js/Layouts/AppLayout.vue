@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-800">
         <nav class="bg-white border-b border-gray-100">
             <!-- Primary Navigation Menu -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -8,7 +8,7 @@
                         <!-- Logo -->
                         <div class="flex-shrink-0 flex items-center">
                             <inertia-link :href="route('dashboard')">
-                                <jet-application-mark class="block h-9 w-auto" />
+                                <jet-application-mark class="block h-6 w-auto" />
                             </inertia-link>
                         </div>
 

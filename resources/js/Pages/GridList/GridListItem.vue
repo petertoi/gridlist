@@ -5,7 +5,7 @@
                 'item h-32 w-full flex items-center justify-center',
                 colorClass,
                 ]"
-            @click="toggleListItem"
+            @click="handleClick"
         >
             {{ item.title }}
         </button>
@@ -53,8 +53,9 @@ export default {
         },
     },
     methods: {
-        toggleListItem: function () {
-            this.$emit('item-toggle', this.item)
+        handleClick: function () {
+            const event = 'edit' === this.mode ? 'item-edit' : 'item-toggle'
+            this.$emit(event, this.item)
         },
 
     },

@@ -74,7 +74,7 @@ class GridListController extends Controller {
      */
     public function edit( GridList $list ) {
         return Inertia::render( 'GridList/Edit', [
-            'list' => $list->load( 'items' ),
+            'list' =>  fn () => $list->load( 'items' ),
         ] );
 
     }

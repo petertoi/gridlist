@@ -15,6 +15,16 @@ class GridList extends Model {
         'map' => 'array'
     ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'id',
+        'user_id',
+    ];
+
     public function getRouteKeyName() {
         return 'uuid';
     }

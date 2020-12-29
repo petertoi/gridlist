@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Include any validation errors automatically in each Inertia response
+        Inertia::share('errors', function () {
+            if (Session::get('errors')) {
+                $bags = [];
+                foreach (Session::get('errors')->getBags() as $bag => $error) {
+                    $bags[$bag] = $error->getMessages();
+                }
+                return $bags;
+            }
+            return (object)[];
+        });
     }
 }

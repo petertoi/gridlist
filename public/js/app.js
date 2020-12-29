@@ -2560,6 +2560,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show: {
@@ -3461,10 +3463,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
-/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
-/* harmony import */ var _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.vue");
-/* harmony import */ var _Pages_GridList_GridList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Pages/GridList/GridList */ "./resources/js/Pages/GridList/GridList.vue");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.vue");
+/* harmony import */ var _Pages_GridList_GridList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Pages/GridList/GridList */ "./resources/js/Pages/GridList/GridList.vue");
+/* harmony import */ var _Pages_GridList_GridListItemModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Pages/GridList/GridListItemModal */ "./resources/js/Pages/GridList/GridListItemModal.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3521,17 +3526,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Show',
+  name: 'Edit',
   components: {
-    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__["default"],
-    GridList: _Pages_GridList_GridList__WEBPACK_IMPORTED_MODULE_3__["default"],
-    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__["default"],
-    JetSecondaryButton: _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Inertia: _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_0__["Inertia"],
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_1__["default"],
+    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_2__["default"],
+    JetSecondaryButton: _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_3__["default"],
+    GridList: _Pages_GridList_GridList__WEBPACK_IMPORTED_MODULE_4__["default"],
+    GridListItemModal: _Pages_GridList_GridListItemModal__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
@@ -3539,8 +3556,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       form: {
         title: this.$page.list.title,
         cols: this.$page.list.cols
+      },
+      modal: {
+        show: false,
+        item: {
+          title: null
+        }
       }
     };
+  },
+  watch: {
+    $page: function $page(newPage) {
+      this.list = _objectSpread({}, newPage.list);
+    }
   },
   methods: {
     handleCancel: function handleCancel() {
@@ -3553,13 +3581,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         title: this.form.title,
         cols: this.form.cols
       }));
+    },
+    handleEdit: function handleEdit(item) {
+      console.log('handleEdit');
+    },
+    handleCreate: function handleCreate() {
+      console.log('handleCreate');
+    },
+    handleItemCreate: function handleItemCreate() {
+      console.log('handleItemCreate');
+      this.modal = {
+        show: true
+      };
+    },
+    handleItemEdit: function handleItemEdit(item) {
+      console.log('handleItemEdit', item);
+      this.modal = {
+        show: true,
+        item: item
+      };
+    },
+    handleModalClose: function handleModalClose() {
+      console.log('handleModalClose');
+      this.modal = {
+        show: false
+      };
+    },
+    handleModalSave: function handleModalSave() {
+      console.log('handleModalSave'); // Inertia.reload({ only: ['list'] })
     }
-  },
-  createListItem: function createListItem(item) {
-    console.log('createListItem', item);
-    this.list.items.push({
-      title: item.title
-    });
   }
 });
 
@@ -3686,23 +3736,36 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    toggleListItem: function toggleListItem() {
-      this.$emit('item-toggle', this.item);
+    handleClick: function handleClick() {
+      var event = 'edit' === this.mode ? 'item-edit' : 'item-toggle';
+      this.$emit(event, this.item);
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Jetstream_Modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Jetstream/Modal */ "./resources/js/Jetstream/Modal.vue");
+/* harmony import */ var _Jetstream_Label__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Jetstream/Label */ "./resources/js/Jetstream/Label.vue");
+/* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
+/* harmony import */ var _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/InputError */ "./resources/js/Jetstream/InputError.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3738,8 +3801,115 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'GridListItemEdit'
+  name: 'GridListItemModal',
+  components: {
+    JetInput: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_2__["default"],
+    JetLabel: _Jetstream_Label__WEBPACK_IMPORTED_MODULE_1__["default"],
+    JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Modal: _Jetstream_Modal__WEBPACK_IMPORTED_MODULE_0__["default"],
+    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_4__["default"],
+    JetSecondaryButton: _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_5__["default"]
+  },
+  props: {
+    show: {
+      type: Boolean,
+      "default": false
+    },
+    maxWidth: {
+      type: String,
+      "default": '2xl'
+    },
+    closeable: {
+      type: Boolean,
+      "default": true
+    },
+    item: {
+      type: Object,
+      "default": function _default() {
+        return {
+          'uuid': false,
+          'title': null
+        };
+      }
+    },
+    list: {
+      type: Object,
+      "default": null
+    }
+  },
+  data: function data() {
+    console.log('data', this.item);
+    return {
+      form: this.$inertia.form({})
+    };
+  },
+  watch: {
+    item: function item(_item) {
+      console.log('itemWatch', _item);
+      this.form = this.$inertia.form(_objectSpread({}, _item), {
+        bag: 'gridListItemModal',
+        resetOnSuccess: false
+      });
+    }
+  },
+  computed: {
+    title: function title() {
+      return !!this.item.uuid ? 'Edit Item' : 'New Item';
+    }
+  },
+  methods: {
+    handleClose: function handleClose() {
+      if (this.closeable) {
+        this.$emit('modal-close');
+      }
+    },
+    handleSubmit: function handleSubmit() {
+      var _this = this;
+
+      // this.$emit('modal-save', this.form)
+      var method = !!this.item.uuid ? 'put' : 'post';
+      var url = !!this.item.uuid ? route('l.i.update', {
+        list: this.list.uuid,
+        item: this.item.uuid
+      }) : route('l.i.store', {
+        list: this.list.uuid
+      });
+      this.form.submit(method, url, {
+        onSuccess: function onSuccess(page) {
+          if (_this.form.hasErrors('gridListItemModal')) {
+            //fail
+            _this.$emit('modal-fail');
+          } else {
+            //success
+            _this.$emit('modal-save');
+          }
+        },
+        onFail: function onFail(errors) {
+          console.log('onFail', errors);
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -3773,87 +3943,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GridListItemNew',
   props: ['list'],
-  data: function data() {
-    return {
-      isEditMode: false,
-      form: {
-        list: {
-          uuid: this.list.uuid
-        },
-        title: null
-      }
-    };
-  },
   methods: {
     handleClick: function handleClick(event) {
-      var _this = this;
-
       console.log('click', event);
-
-      if (this.isEditMode) {
-        this.$refs['new-grid-list-item-title'].focus();
-        return;
-      }
-
-      this.isEditMode = true;
-      this.$nextTick(function () {
-        _this.$refs['new-grid-list-item-title'].focus();
-      });
-    },
-    handleSubmit: function handleSubmit(event) {
-      var _this2 = this;
-
-      console.log('submit', event);
-      console.log('form', this.form);
-      this.$emit('item-new', this.form);
-      this.$nextTick(function () {
-        _this2.form.title = null;
-      });
-    },
-    handleCancel: function handleCancel(event) {
-      console.log('cancel', event);
-      this.isEditMode = false;
+      this.$emit('item-create');
     }
   }
 });
@@ -46810,7 +46906,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "min-h-screen bg-gray-100" },
+    { staticClass: "min-h-screen bg-gray-100 dark:bg-gray-800" },
     [
       _c("nav", { staticClass: "bg-white border-b border-gray-100" }, [
         _c("div", { staticClass: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" }, [
@@ -46825,7 +46921,7 @@ var render = function() {
                     { attrs: { href: _vm.route("dashboard") } },
                     [
                       _c("jet-application-mark", {
-                        staticClass: "block h-9 w-auto"
+                        staticClass: "block h-6 w-auto"
                       })
                     ],
                     1
@@ -48337,7 +48433,7 @@ var render = function() {
     [
       _vm._v(" "),
       _c("div", { staticClass: "pt-12" }, [
-        _c("div", { staticClass: "max-w-7xl mx-auto sm:px-6 lg:px-8" }, [
+        _c("div", { staticClass: "mx-auto sm:px-6 lg:px-8" }, [
           _c(
             "div",
             { staticClass: "bg-white overflow-hidden shadow-xl sm:rounded-lg" },
@@ -48388,14 +48484,26 @@ var render = function() {
             [
               _c("grid-list", {
                 attrs: { list: _vm.list, mode: "edit" },
-                on: { "item-new": _vm.createListItem }
+                on: {
+                  "item-create": _vm.handleItemCreate,
+                  "item-edit": _vm.handleItemEdit
+                }
               })
             ],
             1
           )
         ])
-      ])
-    ]
+      ]),
+      _vm._v(" "),
+      _c("grid-list-item-modal", {
+        attrs: { show: _vm.modal.show, item: _vm.modal.item, list: _vm.list },
+        on: {
+          "modal-close": _vm.handleModalClose,
+          "modal-save": _vm.handleModalSave
+        }
+      })
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -48487,7 +48595,7 @@ var render = function() {
           "item h-32 w-full flex items-center justify-center",
           _vm.colorClass
         ],
-        on: { click: _vm.toggleListItem }
+        on: { click: _vm.handleClick }
       },
       [_vm._v("\n        " + _vm._s(_vm.item.title) + "\n    ")]
     )
@@ -48500,10 +48608,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=template&id=f668515a&scoped=true&":
-/*!***********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=template&id=f668515a&scoped=true& ***!
-  \***********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=template&id=07dd3934&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=template&id=07dd3934& ***!
+  \************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -48515,85 +48623,157 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", { class: "grid-list-item p-2 w-1/" + _vm.cols }, [
-    _c("div", [
-      _c(
-        "button",
-        {
-          staticClass:
-            "item h-32 w-full flex items-center justify-center bg-blue-300",
-          attrs: { contenteditable: "true" },
-          on: {
-            focus: _vm.handleFocus,
-            blur: _vm.handleBlur,
-            change: _vm.handleChange,
-            input: _vm.handleChange
-          }
-        },
-        [_vm._v("\n            " + _vm._s(_vm.item.title) + "\n        ")]
-      ),
+  return _c(
+    "modal",
+    {
+      attrs: {
+        show: _vm.show,
+        "max-width": _vm.maxWidth,
+        closeable: _vm.closeable
+      },
+      on: { close: _vm.handleClose }
+    },
+    [
+      _c("div", { staticClass: "bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4" }, [
+        _c("div", { staticClass: "sm:flex sm:items-start" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10"
+            },
+            [
+              _c(
+                "svg",
+                {
+                  staticClass: "w-6 h-6",
+                  attrs: {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    fill: "none",
+                    viewBox: "0 0 24 24",
+                    stroke: "currentColor"
+                  }
+                },
+                [
+                  _c("path", {
+                    attrs: {
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round",
+                      "stroke-width": "2",
+                      d:
+                        "M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    }
+                  })
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "mt-3 flex-grow text-center sm:mt-0 sm:ml-4 sm:text-left"
+            },
+            [
+              _c("h3", { staticClass: "text-lg" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.title) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mt-4" }, [
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.handleSubmit($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("jet-label", { staticClass: "block" }, [
+                      _vm._v("Title")
+                    ]),
+                    _vm._v(" "),
+                    _c("jet-input", {
+                      class:
+                        "w-full " +
+                        (_vm.form.error("title") && "border-red-400"),
+                      attrs: { type: "text" },
+                      model: {
+                        value: _vm.form.title,
+                        callback: function($$v) {
+                          _vm.$set(_vm.form, "title", $$v)
+                        },
+                        expression: "form.title"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("jet-input-error", {
+                      staticClass: "mt-2",
+                      attrs: { message: _vm.form.error("title") }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "mt-4 flex justify-between" },
+                      [
+                        _c(
+                          "jet-secondary-button",
+                          {
+                            attrs: { type: "button" },
+                            nativeOn: {
+                              click: function($event) {
+                                return _vm.handleClose($event)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Cancel\n                            "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "jet-button",
+                          {
+                            attrs: {
+                              type: "submit",
+                              disabled: _vm.form.processing
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Save\n                            "
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ])
+            ]
+          )
+        ])
+      ]),
       _vm._v(" "),
-      this.isFocused
-        ? _c("div", { staticClass: "actions text-center" }, [
-            _c(
-              "button",
-              { staticClass: "action", on: { click: _vm.handleCancel } },
-              [
-                _c(
-                  "svg",
-                  {
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      fill: "none",
-                      viewBox: "0 0 24 24",
-                      stroke: "currentColor"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                        "stroke-width": "2",
-                        d: "M6 18L18 6M6 6l12 12"
-                      }
-                    })
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "action", on: { click: _vm.handleSubmit } },
-              [
-                _c(
-                  "svg",
-                  {
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      fill: "none",
-                      viewBox: "0 0 24 24",
-                      stroke: "currentColor"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                        "stroke-width": "2",
-                        d: "M5 13l4 4L19 7"
-                      }
-                    })
-                  ]
-                )
-              ]
-            )
-          ])
-        : _vm._e()
-    ])
-  ])
+      _c(
+        "div",
+        { staticClass: "px-6 py-4 bg-gray-100 text-right" },
+        [_vm._t("footer")],
+        2
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48624,161 +48804,40 @@ var render = function() {
       class: 1 === _vm.list.cols ? "w-full" : "w-1/" + _vm.list.cols
     },
     [
-      !_vm.isEditMode
-        ? _c(
-            "button",
-            {
-              staticClass:
-                "h-32 w-full flex items-center justify-center bg-gray-200",
-              on: { click: _vm.handleClick }
-            },
-            [
-              _c("div", { staticClass: "heroicon-24" }, [
-                _c(
-                  "svg",
-                  {
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      fill: "none",
-                      viewBox: "0 0 24 24",
-                      stroke: "currentColor"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                        "stroke-width": "2",
-                        d:
-                          "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                      }
-                    })
-                  ]
-                )
-              ])
-            ]
-          )
-        : _c(
-            "form",
-            {
-              staticClass:
-                "h-32 w-full flex items-center justify-center bg-gray-200",
-              attrs: { action: "" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.handleSubmit($event)
+      _c(
+        "button",
+        {
+          staticClass:
+            "h-32 w-full flex items-center justify-center bg-gray-200",
+          on: { click: _vm.handleClick }
+        },
+        [
+          _c("div", { staticClass: "heroicon-24" }, [
+            _c(
+              "svg",
+              {
+                attrs: {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  fill: "none",
+                  viewBox: "0 0 24 24",
+                  stroke: "currentColor"
                 }
-              }
-            },
-            [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.title,
-                    expression: "form.title"
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round",
+                    "stroke-width": "2",
+                    d:
+                      "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                   }
-                ],
-                ref: "new-grid-list-item-title",
-                staticClass: "text-center",
-                attrs: { type: "text", name: "new-grid-list-item-title" },
-                domProps: { value: _vm.form.title },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "title", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm.isEditMode
-                ? _c(
-                    "div",
-                    {
-                      staticClass:
-                        "absolute left-0 bottom-4 w-full flex justify-center"
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "heroicon-24",
-                          attrs: { type: "reset" },
-                          on: { click: _vm.handleCancel }
-                        },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                fill: "none",
-                                viewBox: "0 0 24 24",
-                                stroke: "currentColor"
-                              }
-                            },
-                            [
-                              _c("path", {
-                                attrs: {
-                                  "stroke-linecap": "round",
-                                  "stroke-linejoin": "round",
-                                  "stroke-width": "2",
-                                  d:
-                                    "M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                }
-                              })
-                            ]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "heroicon-24",
-                          attrs: { type: "submit" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.handleSubmit($event)
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                fill: "none",
-                                viewBox: "0 0 24 24",
-                                stroke: "currentColor"
-                              }
-                            },
-                            [
-                              _c("path", {
-                                attrs: {
-                                  "stroke-linecap": "round",
-                                  "stroke-linejoin": "round",
-                                  "stroke-width": "2",
-                                  d:
-                                    "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                }
-                              })
-                            ]
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                : _vm._e()
-            ]
-          )
+                })
+              ]
+            )
+          ])
+        ]
+      )
     ]
   )
 }
@@ -64071,8 +64130,8 @@ var map = {
 	"./GridList/GridList.vue": "./resources/js/Pages/GridList/GridList.vue",
 	"./GridList/GridListItem": "./resources/js/Pages/GridList/GridListItem.vue",
 	"./GridList/GridListItem.vue": "./resources/js/Pages/GridList/GridListItem.vue",
-	"./GridList/GridListItemEdit": "./resources/js/Pages/GridList/GridListItemEdit.vue",
-	"./GridList/GridListItemEdit.vue": "./resources/js/Pages/GridList/GridListItemEdit.vue",
+	"./GridList/GridListItemModal": "./resources/js/Pages/GridList/GridListItemModal.vue",
+	"./GridList/GridListItemModal.vue": "./resources/js/Pages/GridList/GridListItemModal.vue",
 	"./GridList/GridListItemNew": "./resources/js/Pages/GridList/GridListItemNew.vue",
 	"./GridList/GridListItemNew.vue": "./resources/js/Pages/GridList/GridListItemNew.vue",
 	"./GridList/Index": "./resources/js/Pages/GridList/Index.vue",
@@ -64529,17 +64588,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/Pages/GridList/GridListItemEdit.vue":
-/*!**********************************************************!*\
-  !*** ./resources/js/Pages/GridList/GridListItemEdit.vue ***!
-  \**********************************************************/
+/***/ "./resources/js/Pages/GridList/GridListItemModal.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/Pages/GridList/GridListItemModal.vue ***!
+  \***********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _GridListItemEdit_vue_vue_type_template_id_f668515a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GridListItemEdit.vue?vue&type=template&id=f668515a&scoped=true& */ "./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=template&id=f668515a&scoped=true&");
-/* harmony import */ var _GridListItemEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GridListItemEdit.vue?vue&type=script&lang=js& */ "./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=script&lang=js&");
+/* harmony import */ var _GridListItemModal_vue_vue_type_template_id_07dd3934___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GridListItemModal.vue?vue&type=template&id=07dd3934& */ "./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=template&id=07dd3934&");
+/* harmony import */ var _GridListItemModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GridListItemModal.vue?vue&type=script&lang=js& */ "./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -64549,50 +64608,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _GridListItemEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _GridListItemEdit_vue_vue_type_template_id_f668515a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _GridListItemEdit_vue_vue_type_template_id_f668515a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _GridListItemModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GridListItemModal_vue_vue_type_template_id_07dd3934___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GridListItemModal_vue_vue_type_template_id_07dd3934___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "f668515a",
+  null,
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/Pages/GridList/GridListItemEdit.vue"
+component.options.__file = "resources/js/Pages/GridList/GridListItemModal.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************/
+/***/ "./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridListItemEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridListItemModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=template&id=f668515a&scoped=true&":
-/*!*****************************************************************************************************!*\
-  !*** ./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=template&id=f668515a&scoped=true& ***!
-  \*****************************************************************************************************/
+/***/ "./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=template&id=07dd3934&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=template&id=07dd3934& ***!
+  \******************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemEdit_vue_vue_type_template_id_f668515a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridListItemEdit.vue?vue&type=template&id=f668515a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/GridList/GridListItemEdit.vue?vue&type=template&id=f668515a&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemEdit_vue_vue_type_template_id_f668515a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemModal_vue_vue_type_template_id_07dd3934___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridListItemModal.vue?vue&type=template&id=07dd3934& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/Pages/GridList/GridListItemModal.vue?vue&type=template&id=07dd3934&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemModal_vue_vue_type_template_id_07dd3934___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemEdit_vue_vue_type_template_id_f668515a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridListItemModal_vue_vue_type_template_id_07dd3934___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -65246,7 +65305,20 @@ __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
   methods: {
-    route: route
+    route: route,
+    error: function error(field) {
+      var errorBag = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'default';
+
+      if (!this.$page.errors.hasOwnProperty(errorBag)) {
+        return null;
+      }
+
+      if (this.$page.errors[errorBag].hasOwnProperty(field)) {
+        return this.$page.errors[errorBag][field][0];
+      }
+
+      return null;
+    }
   }
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__["InertiaApp"]);
@@ -65307,8 +65379,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/peter/Web/valet/checklist/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/peter/Web/valet/checklist/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Users/pete/Sites/gridlist/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/pete/Sites/gridlist/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })
