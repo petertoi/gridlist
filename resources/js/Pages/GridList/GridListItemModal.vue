@@ -66,6 +66,8 @@ import JetInputError from "@/Jetstream/InputError"
 import JetButton from "@/Jetstream/Button";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import VSwatches from 'vue-swatches'
+import { cloneDeep } from 'lodash'
+
 
 export default {
     name: 'GridListItemModal',
@@ -98,7 +100,7 @@ export default {
                     'uuid': null,
                     'title': null,
                     'meta' : {
-                        'color': null
+                        'color': '#F56565'
                     }
                 }
             },
@@ -111,18 +113,15 @@ export default {
     data: function () {
         console.log('data', this.item)
         return {
-            form: this.$inertia.form({
-                ...this.item
-            }),
+            form: this.$inertia.form(cloneDeep(this.item)),
             swatches: ['#F56565', '#ED8936', '#ECC94B', '#48BB78', '#4299E1', '#9F7AEA', '#ED64A6']
         }
     },
     watch: {
         item: function (item) {
             console.log('itemWatch', item)
-            this.form = this.$inertia.form({
-                    ...item
-                },
+            this.form = this.$inertia.form(
+                cloneDeep(item),
                 {
                     bag: 'gridListItemModal',
                     resetOnSuccess: false,

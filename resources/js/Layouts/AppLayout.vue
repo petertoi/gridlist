@@ -1,6 +1,6 @@
 <template>
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-800">
-        <nav class="bg-white border-b border-gray-100">
+    <div class="min-h-screen bg-gray-100 dark:bg-black">
+        <nav class="bg-white border-b border-gray-100 dark:bg-gray-900">
             <!-- Primary Navigation Menu -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
@@ -194,7 +194,7 @@
         </nav>
 
         <!-- Page Heading -->
-        <header class="bg-white shadow">
+        <header class="bg-white dark:bg-gray-700 shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between">
                 <slot name="header"></slot>
             </div>

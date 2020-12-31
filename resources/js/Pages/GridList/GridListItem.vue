@@ -7,7 +7,7 @@
             :style="{'background-color': bgColorHex}"
             @click="handleClick"
         >
-            {{ item.title }}
+            <span class="text-xl font-bold">{{ item.title }}</span>
         </button>
     </li>
 </template>
@@ -41,12 +41,12 @@ export default {
         },
     },
     computed: {
-        bgColorHex: function() {
+        bgColorHex: function () {
             return this.item.complete ? '#EDF2F7' : this.item.meta.color
         },
         widthClass: function () {
             console.log('widthClass', this.list.cols)
-            return ( 1 === this.list.cols ) ? 'w-full' : `w-1/${ this.list.cols }`
+            return (1 === this.list.cols) ? 'w-full' : `w-1/${this.list.cols}`
         },
     },
     methods: {

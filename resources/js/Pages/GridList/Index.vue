@@ -1,7 +1,7 @@
 <template>
     <app-layout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Lists
             </h2>
             <div>
@@ -15,14 +15,14 @@
 
         <div class="py-12">
             <div class="max-w-7xl lg:max-w-3xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white dark:bg-gray-700 overflow-hidden shadow-xl sm:rounded-lg">
                     <ul v-if="lists" class="">
                         <li
                             v-for="(list, index) in lists"
-                            class="p-4"
-                            :class="{'bg-gray-100': index % 2}"
+                            class="p-4 bg-white dark:bg-gray-800"
+                            :class="{'bg-gray-100 dark:bg-gray-900': index % 2}"
                         >
-                            <inertia-link :href="route('l.show', [list.uuid])" class="block">{{
+                            <inertia-link :href="route('l.show', [list.uuid])" class="block dark:text-gray-100">{{
                                     list.title
                                 }}
                             </inertia-link>

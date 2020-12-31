@@ -1,5 +1,5 @@
 <template>
-    <ul v-if="list.items" class="grid-list flex flex-wrap p-2">
+    <ul v-if="list.items" class="grid-list flex flex-wrap p-2 dark:bg-gray-900">
         <grid-list-item
             v-for="(item, index) in list.items"
             :key="index"
